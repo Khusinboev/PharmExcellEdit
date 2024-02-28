@@ -21,7 +21,7 @@ async def find_index(id_result_name, tolist_result):
     return id_result_id
 
 
-async def InsertBase(msg, file_name):
+async def Uz_pharm_excell(msg, file_name):
     conn = psycopg2.connect(
         database="oson_ref_prod", user='postgres', password='@dmin2022', host='192.168.225.211', port='5432')
     conn.autocommit = True
@@ -66,9 +66,8 @@ async def InsertBase(msg, file_name):
         if insert_row != 0:
             values = (column1, column2, column3, column4, column5, column6, column7,
                       column8, column9, column10, column11)
-            print(values)
-            # cur.execute(insert_query, values)
-            # conn.commit()
+            cur.execute(insert_query, values)
+            conn.commit()
             insert_row += 1
             try:
                 if insert_row % 100 == 0:
@@ -83,64 +82,63 @@ async def InsertBase(msg, file_name):
     except:
         pass
 
-#     cur1 = cur.execute("""insert into "CRM"."ClientAppReference"(
-#   "Guid",
-#   "CreatedOn",
-#   "CreatedBy",
-#   "IsActive",
-#   "ClientAppGuid",
-#   "LinkedProductGuid",
-#   "ProductName",
-#   "ManufacturerName",
-#   "Price",
-#   "Rest",
-#   "IsIgnored",
-#   "Status",
-#   "IsParapharm",
-#   "IsOnlyForThisClient",
-#   "IsChecked",
-#   "ModifiedBySourceOn",
-#   "LinkedSimilarity",
-#   "NormalizedName",
-#   "IsInGlobal")
-# select
-#  uuid_generate_v4() "Guid",
-# now()  "CreatedOn",
-# 'maziz'  "CreatedBy",
-# true  "IsActive",
-# '7fb0fd79-6f21-495f-84fd-b8bd1c31f362'  "ClientAppGuid",
-#   null "LinkedProductGuid",
-#   s."Упаковка ЛП" "ProductName",
-#   s.производитель  "ManufacturerName",
-#   s."Розничная цена" "Price",
-#   1 "Rest",
-#   false "IsIgnored",
-#   0 "Status",
-#   false "IsParapharm",
-#   false "IsOnlyForThisClient",
-#   false "IsChecked",
-#   now() "ModifiedBySourceOn",
-#   null "LinkedSimilarity",
-# null  "NormalizedName",
-#   false "IsInGlobal"
-# from
-#   "IO".ref_price s
-# on conflict ("ClientAppGuid", "ProductName", "ManufacturerName") do nothing
-# ;
-#    """)
-#     print(cur1)
-#     cur2 = cur.execute(""" update "CRM"."ClientApp" set "LastSyncedDateTime" = now() where "Guid" = '7fb0fd79-6f21-495f-84fd-b8bd1c31f362' """)
-#     print(cur2)
-#     try:
-#         await msg.edit_text(f"oxirgi amal bajarildi...")
-#     except:
-#         pass
-#     cur.close()
-#     conn.close()
+    cur1 = cur.execute("""insert into "CRM"."ClientAppReference"(
+  "Guid",
+  "CreatedOn",
+  "CreatedBy",
+  "IsActive",
+  "ClientAppGuid",
+  "LinkedProductGuid",
+  "ProductName",
+  "ManufacturerName",
+  "Price",
+  "Rest",
+  "IsIgnored",
+  "Status",
+  "IsParapharm",
+  "IsOnlyForThisClient",
+  "IsChecked",
+  "ModifiedBySourceOn",
+  "LinkedSimilarity",
+  "NormalizedName",
+  "IsInGlobal")
+select
+ uuid_generate_v4() "Guid",
+now()  "CreatedOn",
+'maziz'  "CreatedBy",
+true  "IsActive",
+'7fb0fd79-6f21-495f-84fd-b8bd1c31f362'  "ClientAppGuid",
+  null "LinkedProductGuid",
+  s."Упаковка ЛП" "ProductName",
+  s.производитель  "ManufacturerName",
+  s."Розничная цена" "Price",
+  1 "Rest",
+  false "IsIgnored",
+  0 "Status",
+  false "IsParapharm",
+  false "IsOnlyForThisClient",
+  false "IsChecked",
+  now() "ModifiedBySourceOn",
+  null "LinkedSimilarity",
+null  "NormalizedName",
+  false "IsInGlobal"
+from
+  "IO".ref_price s
+on conflict ("ClientAppGuid", "ProductName", "ManufacturerName") do nothing
+; """)
+    print(cur1)
+    cur2 = cur.execute(""" update "CRM"."ClientApp" set "LastSyncedDateTime" = now() where "Guid" = '7fb0fd79-6f21-495f-84fd-b8bd1c31f362' """)
+    print(cur2)
+    try:
+        await msg.edit_text(f"oxirgi amal bajarildi...")
+    except:
+        pass
+    cur.close()
+    conn.close()
     return insert_row
 
 
-async def InsertBase2(excel_file):
+async def Uz_pharm_excell2(excel_file):
     conn = psycopg2.connect(
         database="oson_ref_prod", user='postgres', password='@dmin2022', host='192.168.225.211', port='5432')
     conn.autocommit = True

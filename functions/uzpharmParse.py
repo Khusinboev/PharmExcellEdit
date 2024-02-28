@@ -13,7 +13,7 @@ async def get_site_content1(URL):
     return text
 
 
-async def insertExcell():
+async def uz_pharm_parse():
     workbook = xlsxwriter.Workbook('uzpharmDown/uzpharm.xlsx')
     worksheet = workbook.add_worksheet()
     worksheet.write('A1', '№')

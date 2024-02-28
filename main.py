@@ -6,9 +6,9 @@ from aiogram.dispatcher.filters.state import StatesGroup, State
 from aiogram.types import ReplyKeyboardMarkup
 from openpyxl.reader.excel import load_workbook
 
-from insert import InsertBase, InsertBase2
+from functions.uzpharmExcell import Uz_pharm_excell, Uz_pharm_excell2
 from keys import dp, bot, ADMIN_ID
-from functions.function import *
+from functions.uzpharmParse import uz_pharm_parse
 from milliycatalog.getlist import getlistall
 import asyncio
 
@@ -82,7 +82,7 @@ async def send(message: types.Message, state: FSMContext):
             await editExcel(file_name=fileN, file_cvs=file_cvs)
             await msg1.edit_text("Bazaga kiritish boshlandi")
             await msg1.edit_text(f"Bazaga kiritilyapdi")
-            insert_row = await InsertBase(msg=msg1,  file_name=fileN)
+            insert_row = await Uz_pharm_excell(msg=msg1,  file_name=fileN)
             df = pd.read_excel(f"fileDown/{fileN}", engine='openpyxl', dtype=object, header=None)
             await msg1.edit_text(f"Bazaga kiritildi\n\nBazaga {len(df.values.tolist())}tadan {insert_row}tasi kiritildi")
 
@@ -131,7 +131,7 @@ async def pharm(message: types.Message):
     await message.answer("qabul qildim")
     try:
         await message.answer("Jarayon boshlandi")
-        await insertExcell()
+        await uz_pharm_parse()
         read_file = pd.read_excel("uzpharmDown/uzpharm.xlsx")
         read_file.to_csv(f'uzpharmDown/uzpharm.csv', header=True, index=False)
         pd.DataFrame(pd.read_csv(f'uzpharmDown/uzpharm.csv'))
@@ -144,7 +144,7 @@ async def pharm(message: types.Message):
         user_id = message.from_user.id
         if str(user_id) in ADMIN_ID:
             await message.answer("bazaga kiritish boshlandi")
-            insert_row = await InsertBase2(excellFile)
+            insert_row = await Uz_pharm_excell2(excellFile)
             await message.answer(f"Bazaga kiritish tugallandi\n\nBazaga {len(df.values.tolist())}ta ma'lumotdan {insert_row}tasi kiritildi")
     except Exception as ex:
         await message.answer(f"Error: {str(ex)}")
@@ -152,7 +152,6 @@ async def pharm(message: types.Message):
 
 @dp.message_handler(content_types=types.ContentType.TEXT, user_id=ADMIN_ID)
 async def change_name(msg: types.Message):
-    print(21)
     with open('main_name.txt', 'w') as f:
         f.write(msg.text)
     await msg.answer("nom o'zgartirildi")
