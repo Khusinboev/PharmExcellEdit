@@ -160,7 +160,7 @@ async def makeexcell(fileName, chat_id, s):
         print(req1)
 
     except Exception as e:
-        url_req = "https://api.telegram.org/bot" + token + "/sendMessage" + f"?chat_id={chat_id}" + "&text=" + e
+        url_req = "https://api.telegram.org/bot" + token + "/sendMessage" + f"?chat_id={chat_id}" + "&text=" + str(e)
         req = requests.get(url_req)
 
     loop = asyncio.get_running_loop()
