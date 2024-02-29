@@ -36,7 +36,7 @@ def is_link(text):
     return bool(parsed.scheme and parsed.netloc)
 
 
-async def makeexcell(fileName, chat_id, s):
+async def makeexcell(chat_id, s):
     msg_id = 0
     token = keys.API_TOKEN
     chat_id = chat_id
@@ -48,7 +48,7 @@ async def makeexcell(fileName, chat_id, s):
         col_counter = 0
         col_dict = dict()
         row = 0
-        workbook = xlsxwriter.Workbook(f'{fileName}.xlsx')
+        workbook = xlsxwriter.Workbook(f'../data.xlsx')
         worksheet = workbook.add_worksheet()
         counts = Counter(s)
         mylist = list(counts.keys())
@@ -94,10 +94,10 @@ async def makeexcell(fileName, chat_id, s):
                         worksheet.write(0, 0, "Urls")
                         worksheet.write(row, 0, '#' + link)
                         worksheet.write(row, col_number + 1, value)
-            if row % 3000 == 0:
+            if row % 2000 == 0:
                 time.sleep(10)
         workbook.close()
-        document = open("/home/pharmeditexcel-bot/data.xlsx", "rb")
+        document = open("../data.xlsx", "rb")
         url = f"https://api.telegram.org/bot{keys.API_TOKEN}/sendDocument"
         response = requests.post(url, data={'chat_id': chat_id}, files={'document': document})
         content = response.content.decode("utf8")
@@ -108,7 +108,7 @@ async def makeexcell(fileName, chat_id, s):
         database="oson_ref_prod", user='postgres', password='@dmin2022', host='192.168.225.211', port='5432')
         conn.autocommit = True
         cur = conn.cursor()
-        excel_file = "/home/pharmeditexcel-bot/data.xlsx"
+        excel_file = "data.xlsx"
         df = pd.read_excel(excel_file)
         for row in df.iterrows():
             try:
@@ -161,7 +161,7 @@ async def makeexcell(fileName, chat_id, s):
 
     except Exception as e:
         url_req = "https://api.telegram.org/bot" + token + "/sendMessage" + f"?chat_id={chat_id}" + "&text=" + str(e)
-        req = requests.get(url_req)
+        requests.get(url_req)
 
     loop = asyncio.get_running_loop()
     loop.stop()
