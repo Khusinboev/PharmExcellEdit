@@ -1,4 +1,3 @@
-# import multitasking
 import asyncio
 from bs4 import BeautifulSoup
 import lxml
@@ -7,6 +6,7 @@ import time
 import keys
 import json
 from milliycatalog.makeexcell import makeexcell
+from milliycatalog.mylist import s
 
 
 def get_category_url(url):
@@ -78,7 +78,7 @@ async def getlistall(chat_id):
         requests.get(url_req)
         time.sleep(60)
         loop = asyncio.get_running_loop()
-        loop.run_in_executor(None, lambda: asyncio.run(makeexcell(fileName='data', chat_id=chat_id)))
+        loop.run_in_executor(None, lambda: asyncio.run(makeexcell(fileName='data', chat_id=chat_id, s=s)))
     except Exception as e:
         url_req = "https://api.telegram.org/bot" + token + "/sendMessage" + f"?chat_id={chat_id}" + "&text=" + str(e) 
         requests.get(url_req)

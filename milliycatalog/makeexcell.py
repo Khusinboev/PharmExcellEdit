@@ -9,7 +9,7 @@ import requests
 import xlsxwriter
 from bs4 import BeautifulSoup
 from collections import Counter
-from .mylist import s
+
 import asyncio
 
 
@@ -36,7 +36,7 @@ def is_link(text):
     return bool(parsed.scheme and parsed.netloc)
 
 
-async def makeexcell(fileName, chat_id):
+async def makeexcell(fileName, chat_id, s):
     msg_id = 0
     token = keys.API_TOKEN
     chat_id = chat_id
@@ -160,7 +160,7 @@ async def makeexcell(fileName, chat_id):
         print(req1)
 
     except Exception as e:
-        url_req = "https://api.telegram.org/bot" + token + "/sendMessage" + f"?chat_id={chat_id}" + "&text=" + e 
+        url_req = "https://api.telegram.org/bot" + token + "/sendMessage" + f"?chat_id={chat_id}" + "&text=" + e
         req = requests.get(url_req)
 
     loop = asyncio.get_running_loop()

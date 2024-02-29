@@ -6,11 +6,11 @@ load_dotenv(find_dotenv())
 
 
 ADMIN_ID = [str(os.environ['ADMIN_ID1']), str(os.environ['ADMIN_ID2']), str(os.environ['ADMIN_ID3'])]
-TOKEN = os.environ['BOT_TOKEN']
+API_TOKEN = os.environ['BOT_TOKEN']
 
 
 storage = MemoryStorage()
-bot = Bot(token=TOKEN)
+bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot, storage=storage)
 
 
