@@ -94,7 +94,7 @@ async def makeexcell(chat_id, s):
                         worksheet.write(0, 0, "Urls")
                         worksheet.write(row, 0, '#' + link)
                         worksheet.write(row, col_number + 1, value)
-            if row % 2000 == 0:
+            if row % 300 == 0:
                 time.sleep(10)
         workbook.close()
         document = open("../data.xlsx", "rb")

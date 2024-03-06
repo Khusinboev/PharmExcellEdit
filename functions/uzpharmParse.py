@@ -37,11 +37,12 @@ async def uz_pharm_parse():
         order%5B0%5D%5Bdir%5D=desc&start=0&length=11000""")
 
     infoAll = info2["data"]
+    print(len(infoAll))
 
     for i in infoAll:
-        k += 1
         if int(i["sert_date"][3:5]) != 1:
             if int(i["sert_date"][3:5]) >= (int(datetime.datetime.now(pytz.timezone('Asia/Tashkent')).strftime('%m'))-2):
+                k += 1
                 worksheet.write(f'A{k}', i['DT_RowId'])
                 worksheet.write(f'B{k}', i['year'])
                 worksheet.write(f'C{k}', i['title'])
@@ -56,6 +57,7 @@ async def uz_pharm_parse():
                 worksheet.write(f'L{k}', i['sert_date'])
         else:
             if int(i["sert_date"][3:5]) >= 12:
+                k += 1
                 worksheet.write(f'A{k}', i['DT_RowId'])
                 worksheet.write(f'B{k}', i['year'])
                 worksheet.write(f'C{k}', i['title'])
